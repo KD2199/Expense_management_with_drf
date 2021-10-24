@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load filter_tags %}
+{% block title %} Add Expenses Month {% endblock%}
+{% block content %}
+
+<link href="{% static 'expense/css/expenses.css' %}" rel="stylesheet" />
+
+<style>
+    strong{color:red;}
+</style>
+
+<div class="row">
+  <div class="col-lg-12">
+    <ol class="breadcrumb">
+      <li><i class="fa fa-home"></i><a href="/">Home</a></li>
+       <li><i class="fa fa-calendar-alt"></i><a href="{{ request.build_absolute_uri }}">Add Month</a></li>
+    </ol>
+  </div>
+</div>
+
+<div class="expenses">
+    <h3 class="panel-heading"><i class="fas fa-calendar-alt" ></i> Add Month </h3>
+     <form class="login-form" action="" method="post">
+          {% csrf_token %}
+          <div class="login-wrap">
+          <fieldset>
+            {{form|crispy}}
+              <button type="submit" class="btn btn-primary"> <i class="fas fa-plus" ></i>Add</button>
+          </fieldset>
+          </div>
+      </form>
+</div>
+
+{% endblock%}

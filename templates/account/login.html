@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{%block title%} Tracker Sign In {%endblock %}
+{%block content%}
+<link href="{% static 'expense/css/login.css' %}" rel="stylesheet" />
+<div>
+    <h3 class="panel-heading"><i class="fas fa-key" ></i> Tracker Sign In </h3>
+</div>
+ <form class="login-form" action="" method="post" style="margin:50px auto">
+      {% csrf_token %}
+      <div class="login-wrap">
+        <p class="login-img"><i class="icon_lock_alt"></i></p>
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-user"></i></span>
+          <input type="text" class="form-control" name="username" placeholder="Username" autofocus required>
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-key"></i></span>
+          <input type="password" class="form-control" name="password" placeholder="Password" required>
+        </div>
+
+          <a href="{% url 'account:password_reset' %}" id="forgot-password"> Forgot password?</a>
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button><br>
+        <a href="{% url 'account:signup' %}"><button class="btn btn-info btn-lg btn-block" type="button">Signup</button></a>
+      </div>
+    </form>
+{%endblock%}

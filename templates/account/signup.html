@@ -1,0 +1,31 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{%block title%} Tracker Sign Up {%endblock %}
+{%block content%}
+
+<link href="{% static 'expense/css/signup.css' %}" rel="stylesheet" />
+
+<h3 class="panel-heading" style="background:none;text-align:center;font-weight: bolder;padding-top: 85px !important;"><i class="fas fa-user-plus" ></i> Tracker Sign Up </h3>
+ <form class="login-form" action="" method="post" style="margin:50px auto">
+      {% csrf_token %}
+      <fieldset class="form-group text-center">
+        {{ form|crispy}}
+        <div class="container">
+          <div class="row">
+            <div class="col text-center">
+              <button type="submit" class="btn btn-danger btn-lg"> Sign Up </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-center">
+              <a href="{% url 'account:login' %}"><br>
+                <button type="button" class="btn btn-success btn-lg">Login</button>
+            </a>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+
+{%endblock%}

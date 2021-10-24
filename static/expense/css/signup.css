@@ -1,0 +1,36 @@
+.panel-heading {
+  background:none;text-align:center;font-weight: bolder;padding-top: 85px !important;
+  }
+
+ .controls{
+margin:0 25px;
+font-weight: bolder;
+}
+.controls input{
+margin:10px 0;
+}
+.help-block strong{
+color:red;}
+
+.asteriskField {
+    display: none;
+  }
+
+label{
+color: black;
+font-weight: bolder;
+margin:10px 0;
+}
+
+form button{
+width:90%;
+margin:10px 0;
+}
+
+.row button{margin-bottom:10px;}
+
+#main-content {
+
+    margin-left: 0;
+
+}

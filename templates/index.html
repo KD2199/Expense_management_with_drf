@@ -1,0 +1,240 @@
+{% extends 'base.html'%}
+{% load static %}
+{%block title%} Tracker Home {%endblock %}
+{%block content%}
+
+<link href="{% static 'expense/css/home.css' %}" rel="stylesheet" />
+<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+ <script src="{% static 'expense/js/chart.js' %}"></script>
+
+{% if user.is_authenticated %}
+    <div class="row">
+      <div class="col-lg-12">
+        <ol class="breadcrumb">
+          <li><i class="fa fa-home"></i><a href="/">Home</a></li>
+           <li><i class="fa fa-laptop"></i><a href="/">Dashboard</a></li>
+        </ol>
+
+      </div>
+    </div>
+  {% if month_list %}
+  <div class="cover">
+        <div class="row">
+            {% for month in month_list %}
+              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="info-box">
+                    <label><b>{{month.name}}</b></label>
+                    <div class="panel-body">
+                        <label>Income: {{month.income}}</label>
+                        {% if month.limit <= month.trigger and month.limit > 0 %}
+                         <span class="blink_text">Limit: {{month.limit}} ( Your Have Spent 90% )</span>
+                        {% elif month.limit <= 0 %}
+                         <span class="blink_text">Limit: {{month.limit}} ( Your Have exceed the limit)</span>
+                        {% else %}
+                         <label>Limit: {{month.limit}}</label>
+                        {% endif %}
+                    </div>
+                </div>
+              </div>
+            {% endfor %}
+        </div>
+  </div>
+  {% endif %}
+{% if labels %}
+<h3 id="graph-header">Category Based Expense Analysis (Overall)</h3>
+<div class="tab-pane" id="chartjs">
+
+  <div class="row">
+      <!-- Line -->
+      <div class="col-lg-6">
+          <section class="panel">
+              <div class="visualize">
+                  <canvas id="line" height="100" width="100"></canvas>
+              </div>
+          </section>
+      </div>
+      <!-- Bar -->
+      <div class="col-lg-6">
+          <section class="panel">
+              <div class="visualize">
+                  <canvas id="bar" height="100" width="100"></canvas>
+              </div>
+          </section>
+      </div>
+  </div>
+
+  <div class="row">
+      <!-- Pie -->
+      <div class="col-lg-6">
+          <section class="panel">
+              <div class="visualize">
+                  <canvas id="pie" height="100" width="100"></canvas>
+              </div>
+          </section>
+      </div>
+      <!-- Doughnut -->
+      <div class="col-lg-6">
+          <section class="panel">
+              <div class="visualize">
+                  <canvas id="doughnut" height="100" width="100"></canvas>
+              </div>
+          </section>
+      </div>
+  </div>
+</div>
+{% endif %}
+  <script>
+  var c1 = document.getElementById('doughnut').getContext('2d');
+  var c2 = document.getElementById('pie').getContext('2d');
+  var c3 = document.getElementById('bar').getContext('2d');
+  var c4 = document.getElementById('line').getContext('2d');
+
+  var doughnut = new Chart(c1, {
+      type: 'doughnut',
+      data: {
+          labels: {{ labels|safe }},
+          datasets: [{
+              data: {{ data|safe }},
+              backgroundColor:  {{ color|safe }},
+              borderColor: '#394a59',
+          }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Doughnut Chart',
+            color: '#394a59',
+            font: {
+              size: 15,
+              family: 'tahoma',
+              weight: 'bold',
+              style: 'italic'
+            },
+          }
+        },
+  },
+
+  });
+   window.onload = function() {
+      var ctx = document.getElementById('doughnut').getContext('2d');
+      window.myPie = new Chart(c1, doughnut);
+    };
+
+     var pie = new Chart(c2, {
+      type: 'pie',
+      data: {
+          labels: {{ labels|safe }},
+          datasets: [{
+              data: {{ data|safe }},
+              backgroundColor:  {{ color|safe }},
+              borderColor: '#394a59',
+          }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Pie Chart',
+            color: '#394a59',
+            font: {
+              size: 15,
+              family: 'tahoma',
+              weight: 'bold',
+              style: 'italic'
+            },
+          }
+        }
+  },
+
+  });
+   window.onload = function() {
+      var ctx = document.getElementById('doughnut').getContext('2d');
+      window.myPie = new Chart(c2, pie);
+    };
+
+     var bar = new Chart(c3, {
+      type: 'bar',
+      data: {
+          labels: {{ labels|safe }},
+          datasets: [{
+              label: 'Your Expenses',
+              data: {{ data|safe }},
+              backgroundColor:  {{ color|safe }},
+              borderColor: '#394a59',
+          }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Bar Chart',
+            color: '#394a59',
+            font: {
+              size: 15,
+              family: 'tahoma',
+              weight: 'bold',
+              style: 'italic'
+            },
+          }
+        },
+
+  },
+
+  });
+   window.onload = function() {
+      var ctx = document.getElementById('doughnut').getContext('2d');
+      window.myPie = new Chart(c3, bar);
+    };
+
+     var line = new Chart(c4, {
+      type: 'line',
+      data: {
+          labels: {{ labels|safe }},
+          datasets: [{
+              label: 'Your Expenses',
+              data: {{ data|safe }},
+              backgroundColor:  {{ color|safe }},
+              borderColor: '#394a59',
+          }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Line Chart',
+            color: '#394a59',
+            font: {
+              size: 15,
+              family: 'tahoma',
+              weight: 'bold',
+              style: 'italic'
+            },
+          }
+        }
+  },
+
+  });
+   window.onload = function() {
+      var ctx = document.getElementById('doughnut').getContext('2d');
+      window.myPie = new Chart(c4, line);
+    };
+  </script>
+{% endif %}
+{%endblock%}

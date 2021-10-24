@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load filter_tags %}
+{% block title %} Generate Report {% endblock%}
+{% block content %}
+
+<link href="{% static 'expense/css/report.css' %}" rel="stylesheet" />
+
+<div class="row">
+          <div class="col-lg-12">
+            <ol class="breadcrumb">
+              <li><i class="fa fa-home"></i><a href="/">Home</a></li>
+               <li><i class="fa fa-file-pdf"></i><a href="{{ request.build_absolute_uri }}">Generated Report</a></li>
+            </ol>
+          </div>
+        </div>
+
+<div>
+    <h3 class="panel-heading"><i class="fas fa-file-pdf" ></i> Generate Report </h3>
+     <form class="login-form" action="" method="post">
+          {% csrf_token %}
+          <div class="login-wrap">
+          <fieldset>
+            {{form|crispy}}
+              <button type="submit" class="btn btn-primary"> Generate </button>
+          </fieldset>
+          </div>
+      </form>
+</div>
+{% endblock%}

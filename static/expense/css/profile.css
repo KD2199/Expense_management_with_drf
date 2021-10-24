@@ -1,0 +1,35 @@
+
+#hint_id_username,#edit-profile{
+  display:none;
+  }
+
+    .control-group {
+    margin: 20px auto;
+  }
+
+  .controls input {
+    width: 50%;
+    height: 35px;
+    margin:10px auto;
+  }
+
+  button {
+    width: auto;
+    margin: 10px 0;
+  }
+  .asteriskField {
+    display: none;
+  }
+
+
+  fieldset label{
+    color: black;
+    font-weight: bolder;
+  }
+
+  fieldset{
+  text-align:center;
+  }
+
+  .wrapper .row {
+    margin-top:55px}
